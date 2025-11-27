@@ -218,7 +218,7 @@ export default function App() {
           {/* RIGHT IMAGE */}
           <div className="flex justify-center order-1 md:order-2 md:justify-end md:max-w-lg fade-in-up">
             <img
-              src="/src/assets/chill_guy.png"
+              src="/chill_guy.png"
               alt="HomeQadam illustration"
               className="w-64 sm:w-72 md:w-[420px] drop-shadow-[0_15px_30px_rgba(0,0,0,0.15)]"
             />
