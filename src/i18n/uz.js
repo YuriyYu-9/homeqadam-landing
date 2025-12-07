@@ -27,6 +27,13 @@ export const uz = {
     submit: "Ariza yuborish",
   },
 
+  success: {
+  title: "Ariza yuborildi!",
+  message: "Rahmat! Arizangiz qabul qilindi va tez orada siz bilan bog‘lanamiz.",
+  ok: "OK"
+},
+
+
   specialists: [
     "Elektrik",
     "Santexnik",

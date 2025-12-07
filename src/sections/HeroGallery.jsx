@@ -20,6 +20,7 @@ export default function HeroGallery() {
         </p>
 
         <div className="flex flex-col items-center gap-10 md:flex-row">
+          {/* LEFT TEXT BLOCK */}
           <div className="w-full md:w-5/12">
             <h2 className="mb-4 text-2xl font-bold md:text-3xl">
               {dict.hero.title}
@@ -32,6 +33,7 @@ export default function HeroGallery() {
             </p>
           </div>
 
+          {/* RIGHT GALLERY BLOCK */}
           <div className="w-full md:w-7/12">
             <Swiper
               modules={[Navigation, Autoplay]}
@@ -52,15 +54,22 @@ export default function HeroGallery() {
             >
               {specialists.map((s) => (
                 <SwiperSlide key={s.id}>
-                  <div className="overflow-hidden transition bg-white shadow-md rounded-xl hover:shadow-lg">
-                    <img
-                      src={s.image}
-                      alt={dict.specialists[s.key]}
-                      className="object-cover w-full h-48"
-                    />
+                  <div className="flex flex-col items-center overflow-hidden transition bg-white shadow-md rounded-xl hover:shadow-lg">
+                    
+                    {/* ADAPTIVE IMAGE */}
+                    <div className="flex items-center justify-center w-full p-4 bg-white">
+                      <img
+                        src={s.image}
+                        alt={dict.specialists[s.key]}
+                        className="object-contain w-full h-auto  max-h-48 sm:max-h-56 md:max-h-64 lg:max-h-72"
+                      />
+                    </div>
+
+                    {/* TITLE */}
                     <div className="p-4 text-lg font-semibold text-center">
                       {dict.specialists[s.key]}
                     </div>
+
                   </div>
                 </SwiperSlide>
               ))}
@@ -69,6 +78,7 @@ export default function HeroGallery() {
         </div>
       </Container>
 
+      {/* SWIPER BUTTONS */}
       <style>
         {`
           .swiper-button-next,

@@ -27,6 +27,13 @@ export const en = {
     submit: "Submit request",
   },
 
+  success: {
+  title: "Request sent!",
+  message: "Thank you! We have received your request and will contact you soon.",
+  ok: "OK"
+},
+
+
   specialists: [
     "Electrician",
     "Plumber",

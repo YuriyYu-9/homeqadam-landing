@@ -2,23 +2,24 @@ import { useState, useContext } from "react";
 import Container from "../layouts/Container";
 import { LangContext } from "../i18n/context";
 import InputMask from "react-input-mask";
+import SuccessModal from "../components/SuccessModal";
 import { sanitize, buildTelegramMessage } from "../utils/security";
 
 export default function CTA({ onOpenPrivacy, onOpenTerms }) {
   const { dict } = useContext(LangContext);
 
   const [loading, setLoading] = useState(false);
+  const [successOpen, setSuccessOpen] = useState(false);
 
   const [form, setForm] = useState({
     name: "",
-    phone: "",
+    phone: "+998 00 000 00 00",
     service: "",
     description: "",
     agree: false,
-    secret: "", // honeypot
+    secret: "",
   });
 
-  // изменяем состояние ввода
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
 
@@ -28,16 +29,14 @@ export default function CTA({ onOpenPrivacy, onOpenTerms }) {
     });
   };
 
-  // валидация формы
   const validate = () => {
-    if (form.secret.trim() !== "") return false; // honeypot
+    if (form.secret.trim() !== "") return false;
 
     if (!/^[A-Za-zА-Яа-яЁёЎўҚқҒғҲҳ’' ]{2,30}$/.test(form.name)) {
       alert("Введите корректное имя.");
       return false;
     }
 
-    // Телефон: строго +998 XX XXX XX XX
     if (!/^\+998 \d{2} \d{3} \d{2} \d{2}$/.test(form.phone)) {
       alert("Введите корректный номер телефона в формате +998 90 000 00 00.");
       return false;
@@ -61,7 +60,6 @@ export default function CTA({ onOpenPrivacy, onOpenTerms }) {
     return true;
   };
 
-  // отправка формы
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -86,11 +84,10 @@ export default function CTA({ onOpenPrivacy, onOpenTerms }) {
       });
 
       if (res.ok) {
-        alert("Заявка успешно отправлена!");
-
+        setSuccessOpen(true);
         setForm({
           name: "",
-          phone: "",
+          phone: "+998 00 000 00 00",
           service: "",
           description: "",
           agree: false,
@@ -122,7 +119,6 @@ export default function CTA({ onOpenPrivacy, onOpenTerms }) {
             onSubmit={handleSubmit}
             className="p-6 space-y-4 border border-blue-100 shadow-md bg-blue-50 rounded-xl"
           >
-            {/* honeypot */}
             <input
               type="text"
               name="secret"
@@ -132,7 +128,6 @@ export default function CTA({ onOpenPrivacy, onOpenTerms }) {
               onChange={handleChange}
             />
 
-            {/* Имя */}
             <input
               type="text"
               name="name"
@@ -143,7 +138,6 @@ export default function CTA({ onOpenPrivacy, onOpenTerms }) {
               required
             />
 
-            {/* Телефон — с маской */}
             <InputMask
               mask="+998 99 999 99 99"
               maskChar={null}
@@ -151,12 +145,10 @@ export default function CTA({ onOpenPrivacy, onOpenTerms }) {
               onChange={(e) => {
                 let v = e.target.value;
 
-                // защита от удаления префикса "+998 "
                 if (!v.startsWith("+998 ")) {
                   v = "+998 " + v.replace(/^\+998\s*/, "");
                 }
 
-                // защита от ввода букв
                 v = v.replace(/[^\d+ ]/g, "");
 
                 setForm({ ...form, phone: v });
@@ -174,7 +166,6 @@ export default function CTA({ onOpenPrivacy, onOpenTerms }) {
               )}
             </InputMask>
 
-            {/* Выпадающий список */}
             <select
               name="service"
               value={form.service}
@@ -193,7 +184,6 @@ export default function CTA({ onOpenPrivacy, onOpenTerms }) {
               ))}
             </select>
 
-            {/* Описание */}
             <textarea
               name="description"
               value={form.description}
@@ -204,7 +194,6 @@ export default function CTA({ onOpenPrivacy, onOpenTerms }) {
               required
             />
 
-            {/* Согласие */}
             <label className="flex items-start gap-2 text-xs md:text-sm">
               <input
                 type="checkbox"
@@ -214,6 +203,7 @@ export default function CTA({ onOpenPrivacy, onOpenTerms }) {
                 className="mt-1"
                 required
               />
+
               <span>
                 {dict.cta.agree1}{" "}
                 <button
@@ -235,7 +225,6 @@ export default function CTA({ onOpenPrivacy, onOpenTerms }) {
               </span>
             </label>
 
-            {/* Кнопка */}
             <button
               type="submit"
               disabled={loading}
@@ -246,6 +235,8 @@ export default function CTA({ onOpenPrivacy, onOpenTerms }) {
           </form>
         </div>
       </Container>
+
+      <SuccessModal open={successOpen} onClose={() => setSuccessOpen(false)} />
     </section>
   );
 }
