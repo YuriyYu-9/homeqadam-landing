@@ -1,6 +1,7 @@
 import { useState, useContext } from "react";
 import Container from "../layouts/Container";
 import { LangContext } from "../i18n/context";
+import InputMask from "react-input-mask";
 import { sanitize, buildTelegramMessage } from "../utils/security";
 
 export default function CTA({ onOpenPrivacy, onOpenTerms }) {
@@ -17,6 +18,7 @@ export default function CTA({ onOpenPrivacy, onOpenTerms }) {
     secret: "", // honeypot
   });
 
+  // изменяем состояние ввода
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
 
@@ -26,35 +28,31 @@ export default function CTA({ onOpenPrivacy, onOpenTerms }) {
     });
   };
 
+  // валидация формы
   const validate = () => {
-    // honeypot
-    if (form.secret.trim() !== "") return false;
+    if (form.secret.trim() !== "") return false; // honeypot
 
-    // имя
     if (!/^[A-Za-zА-Яа-яЁёЎўҚқҒғҲҳ’' ]{2,30}$/.test(form.name)) {
       alert("Введите корректное имя.");
       return false;
     }
 
-    // телефон
-    if (!/^\+?[0-9()\-\s]{7,20}$/.test(form.phone)) {
-      alert("Введите корректный номер телефона.");
+    // Телефон: строго +998 XX XXX XX XX
+    if (!/^\+998 \d{2} \d{3} \d{2} \d{2}$/.test(form.phone)) {
+      alert("Введите корректный номер телефона в формате +998 90 000 00 00.");
       return false;
     }
 
-    // услуга
     if (!form.service) {
       alert("Выберите тип услуги.");
       return false;
     }
 
-    // описание
     if (form.description.trim().length < 5) {
       alert("Опишите задачу более подробно.");
       return false;
     }
 
-    // согласие
     if (!form.agree) {
       alert("Необходимо согласиться с условиями.");
       return false;
@@ -63,6 +61,7 @@ export default function CTA({ onOpenPrivacy, onOpenTerms }) {
     return true;
   };
 
+  // отправка формы
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -79,27 +78,32 @@ export default function CTA({ onOpenPrivacy, onOpenTerms }) {
 
     const message = buildTelegramMessage(safeForm);
 
-    const res = await fetch("/api/sendMessage", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...safeForm, message }),
-    });
+    try {
+      const res = await fetch("/api/sendMessage", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...safeForm, message }),
+      });
+
+      if (res.ok) {
+        alert("Заявка успешно отправлена!");
+
+        setForm({
+          name: "",
+          phone: "",
+          service: "",
+          description: "",
+          agree: false,
+          secret: "",
+        });
+      } else {
+        alert("Ошибка отправки. Попробуйте позже.");
+      }
+    } catch (err) {
+      alert("Ошибка соединения. Попробуйте позже.");
+    }
 
     setLoading(false);
-
-    if (res.ok) {
-      alert("Заявка успешно отправлена!");
-      setForm({
-        name: "",
-        phone: "",
-        service: "",
-        description: "",
-        agree: false,
-        secret: "",
-      });
-    } else {
-      alert("Ошибка отправки. Попробуйте позже.");
-    }
   };
 
   return (
@@ -118,7 +122,7 @@ export default function CTA({ onOpenPrivacy, onOpenTerms }) {
             onSubmit={handleSubmit}
             className="p-6 space-y-4 border border-blue-100 shadow-md bg-blue-50 rounded-xl"
           >
-            {/* Honeypot */}
+            {/* honeypot */}
             <input
               type="text"
               name="secret"
@@ -128,6 +132,7 @@ export default function CTA({ onOpenPrivacy, onOpenTerms }) {
               onChange={handleChange}
             />
 
+            {/* Имя */}
             <input
               type="text"
               name="name"
@@ -138,15 +143,36 @@ export default function CTA({ onOpenPrivacy, onOpenTerms }) {
               required
             />
 
-            <input
-              type="text"
-              name="phone"
+            {/* Телефон — с маской */}
+            <InputMask
+              mask="+998 99 999 99 99"
+              maskChar={null}
               value={form.phone}
-              onChange={handleChange}
-              placeholder={dict.cta.phone}
-              className="w-full p-3 bg-white border border-gray-200 rounded-lg"
-              required
-            />
+              onChange={(e) => {
+                let v = e.target.value;
+
+                // защита от удаления префикса "+998 "
+                if (!v.startsWith("+998 ")) {
+                  v = "+998 " + v.replace(/^\+998\s*/, "");
+                }
+
+                // защита от ввода букв
+                v = v.replace(/[^\d+ ]/g, "");
+
+                setForm({ ...form, phone: v });
+              }}
+            >
+              {(inputProps) => (
+                <input
+                  {...inputProps}
+                  type="text"
+                  name="phone"
+                  placeholder="+998 90 000 00 00"
+                  className="w-full p-3 bg-white border border-gray-200 rounded-lg"
+                  required
+                />
+              )}
+            </InputMask>
 
             {/* Выпадающий список */}
             <select
@@ -167,6 +193,7 @@ export default function CTA({ onOpenPrivacy, onOpenTerms }) {
               ))}
             </select>
 
+            {/* Описание */}
             <textarea
               name="description"
               value={form.description}
@@ -177,6 +204,7 @@ export default function CTA({ onOpenPrivacy, onOpenTerms }) {
               required
             />
 
+            {/* Согласие */}
             <label className="flex items-start gap-2 text-xs md:text-sm">
               <input
                 type="checkbox"
@@ -207,6 +235,7 @@ export default function CTA({ onOpenPrivacy, onOpenTerms }) {
               </span>
             </label>
 
+            {/* Кнопка */}
             <button
               type="submit"
               disabled={loading}
