@@ -8,69 +8,99 @@ import { sanitize, buildTelegramMessage } from "../utils/security";
 export default function CTA({ onOpenPrivacy, onOpenTerms }) {
   const { dict } = useContext(LangContext);
 
+  const [loading, setLoading] = useState(false);
+  const [successOpen, setSuccessOpen] = useState(false);
+
   const [form, setForm] = useState({
     name: "",
-    phone: "",
+    phone: "+998 00 000 00 00",
     service: "",
     description: "",
+    agree: false,
     secret: "",
   });
 
-  const [success, setSuccess] = useState(false);
-  const [loading, setLoading] = useState(false);
-
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const { name, value, type, checked } = e.target;
+
+    setForm({
+      ...form,
+      [name]: type === "checkbox" ? checked : value,
+    });
+  };
+
+  const validate = () => {
+    if (form.secret.trim() !== "") return false;
+
+    if (!/^[A-Za-zА-Яа-яЁёЎўҚқҒғҲҳ’' ]{2,30}$/.test(form.name)) {
+      alert("Введите корректное имя.");
+      return false;
+    }
+
+    if (!/^\+998 \d{2} \d{3} \d{2} \d{2}$/.test(form.phone)) {
+      alert("Введите корректный номер телефона в формате +998 90 000 00 00.");
+      return false;
+    }
+
+    if (!form.service) {
+      alert("Выберите тип услуги.");
+      return false;
+    }
+
+    if (form.description.trim().length < 5) {
+      alert("Опишите задачу более подробно.");
+      return false;
+    }
+
+    if (!form.agree) {
+      alert("Необходимо согласиться с условиями.");
+      return false;
+    }
+
+    return true;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (form.secret.trim() !== "") return;
-
-    if (
-      !form.name.trim() ||
-      form.phone.includes("_") ||
-      !form.service.trim() ||
-      !form.description.trim()
-    ) {
-      alert(dict.cta.fillAllFields || "Заполните все поля");
-      return;
-    }
+    if (!validate()) return;
 
     setLoading(true);
 
-    const sanitizedData = {
+    const safeForm = {
       name: sanitize(form.name),
       phone: sanitize(form.phone),
       service: sanitize(form.service),
       description: sanitize(form.description),
     };
 
-    const message = buildTelegramMessage(sanitizedData);
+    const message = buildTelegramMessage(safeForm);
 
     try {
       const res = await fetch("/api/sendMessage", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text: message }),
+        body: JSON.stringify({ ...safeForm, message }),
       });
 
-      if (!res.ok) throw new Error("Send error");
-
-      setSuccess(true);
-      setForm({
-        name: "",
-        phone: "",
-        service: "",
-        description: "",
-        secret: "",
-      });
+      if (res.ok) {
+        setSuccessOpen(true);
+        setForm({
+          name: "",
+          phone: "+998 00 000 00 00",
+          service: "",
+          description: "",
+          agree: false,
+          secret: "",
+        });
+      } else {
+        alert("Ошибка отправки. Попробуйте позже.");
+      }
     } catch (err) {
-      alert(dict.cta.error || "Ошибка. Попробуйте позже.");
-    } finally {
-      setLoading(false);
+      alert("Ошибка соединения. Попробуйте позже.");
     }
+
+    setLoading(false);
   };
 
   return (
@@ -89,7 +119,6 @@ export default function CTA({ onOpenPrivacy, onOpenTerms }) {
             onSubmit={handleSubmit}
             className="p-6 space-y-4 border border-blue-100 shadow-md bg-blue-50 rounded-xl"
           >
-            {/* Honeypot */}
             <input
               type="text"
               name="secret"
@@ -99,7 +128,6 @@ export default function CTA({ onOpenPrivacy, onOpenTerms }) {
               onChange={handleChange}
             />
 
-            {/* NAME */}
             <input
               type="text"
               name="name"
@@ -110,44 +138,52 @@ export default function CTA({ onOpenPrivacy, onOpenTerms }) {
               required
             />
 
-            {/* PHONE (simple mask) */}
             <InputMask
               mask="+998 99 999 99 99"
-              maskChar="_"
+              maskChar={null}
               value={form.phone}
-              onChange={(e) =>
-                setForm({ ...form, phone: e.target.value })
-              }
+              onChange={(e) => {
+                let v = e.target.value;
+
+                if (!v.startsWith("+998 ")) {
+                  v = "+998 " + v.replace(/^\+998\s*/, "");
+                }
+
+                v = v.replace(/[^\d+ ]/g, "");
+
+                setForm({ ...form, phone: v });
+              }}
             >
               {(inputProps) => (
                 <input
                   {...inputProps}
-                  type="tel"
+                  type="text"
                   name="phone"
-                  placeholder="+998 __ ___ __ __"
+                  placeholder="+998 90 000 00 00"
                   className="w-full p-3 bg-white border border-gray-200 rounded-lg"
                   required
                 />
               )}
             </InputMask>
 
-            {/* SERVICE */}
             <select
               name="service"
               value={form.service}
               onChange={handleChange}
-              className="w-full p-3 bg-white border border-gray-200 rounded-lg"
               required
+              className="w-full p-3 bg-white border border-gray-200 rounded-lg"
             >
-              <option value="">{dict.cta.service}</option>
-              {dict.categoriesList.map((c, i) => (
-                <option key={i} value={c}>
-                  {c}
+              <option value="" disabled>
+                {dict.cta.service}
+              </option>
+
+              {dict.categoriesList.map((cat, i) => (
+                <option key={i} value={cat}>
+                  {cat}
                 </option>
               ))}
             </select>
 
-            {/* DESCRIPTION */}
             <textarea
               name="description"
               value={form.description}
@@ -158,9 +194,16 @@ export default function CTA({ onOpenPrivacy, onOpenTerms }) {
               required
             />
 
-            {/* AGREEMENT */}
             <label className="flex items-start gap-2 text-xs md:text-sm">
-              <input type="checkbox" required className="mt-1" />
+              <input
+                type="checkbox"
+                name="agree"
+                checked={form.agree}
+                onChange={handleChange}
+                className="mt-1"
+                required
+              />
+
               <span>
                 {dict.cta.agree1}{" "}
                 <button
@@ -182,21 +225,18 @@ export default function CTA({ onOpenPrivacy, onOpenTerms }) {
               </span>
             </label>
 
-            {/* SUBMIT */}
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3 font-semibold text-white transition bg-blue-600 rounded-lg hover:bg-blue-700 disabled:opacity-60"
+              className="w-full py-3 font-semibold text-white transition bg-blue-600 rounded-lg hover:bg-blue-700"
             >
-              {loading ? dict.cta.loading || "Отправка..." : dict.cta.submit}
+              {loading ? "Отправка..." : dict.cta.submit}
             </button>
           </form>
         </div>
       </Container>
 
-      {success && (
-        <SuccessModal onClose={() => setSuccess(false)} dict={dict} />
-      )}
+      <SuccessModal open={successOpen} onClose={() => setSuccessOpen(false)} />
     </section>
   );
 }
