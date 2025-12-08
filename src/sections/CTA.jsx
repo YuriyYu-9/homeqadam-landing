@@ -10,7 +10,7 @@ export default function CTA({ onOpenPrivacy, onOpenTerms }) {
 
   const [form, setForm] = useState({
     name: "",
-    phone: "+998 __ ___ __ __", // стартовое значение
+    phone: "",
     service: "",
     description: "",
     secret: "",
@@ -19,23 +19,22 @@ export default function CTA({ onOpenPrivacy, onOpenTerms }) {
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const handleChange = (e) =>
+  const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
+  };
 
-  // --- MAIN SUBMIT LOGIC ---
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (form.secret.trim() !== "") return;
 
-    // Проверка телефона — не должно быть подчёркиваний
     if (
       !form.name.trim() ||
-      form.phone.includes("_") || // <-- ключевая проверка
+      form.phone.includes("_") ||
       !form.service.trim() ||
       !form.description.trim()
     ) {
-      alert(dict.cta.fillAllFields || "Заполните все поля корректно");
+      alert(dict.cta.fillAllFields || "Заполните все поля");
       return;
     }
 
@@ -60,10 +59,9 @@ export default function CTA({ onOpenPrivacy, onOpenTerms }) {
       if (!res.ok) throw new Error("Send error");
 
       setSuccess(true);
-
       setForm({
         name: "",
-        phone: "+998 __ ___ __ __",
+        phone: "",
         service: "",
         description: "",
         secret: "",
@@ -74,10 +72,6 @@ export default function CTA({ onOpenPrivacy, onOpenTerms }) {
       setLoading(false);
     }
   };
-
-  // Позиция после "+998 "
-  const PREFIX = "+998 ";
-  const PREFIX_LEN = PREFIX.length;
 
   return (
     <section className="pt-10 pb-14 bg-gray-50">
@@ -116,38 +110,14 @@ export default function CTA({ onOpenPrivacy, onOpenTerms }) {
               required
             />
 
-            {/* PHONE (MASK + FIXED PREFIX) */}
+            {/* PHONE (simple mask) */}
             <InputMask
               mask="+998 99 999 99 99"
               maskChar="_"
-              alwaysShowMask={true}
               value={form.phone}
-              onChange={(e) => {
-                let v = e.target.value;
-
-                // Принуждаем начало строки
-                if (!v.startsWith(PREFIX)) v = PREFIX + v.replace(/^\+998\s*/, "");
-
-                // Запрещаем изменение первых 5 символов
-                if (e.target.selectionStart < PREFIX_LEN) {
-                  e.target.setSelectionRange(PREFIX_LEN, PREFIX_LEN);
-                  return;
-                }
-
-                setForm({ ...form, phone: v });
-              }}
-              onFocus={(e) => {
-                setTimeout(() => {
-                  if (e.target.selectionStart < PREFIX_LEN) {
-                    e.target.setSelectionRange(PREFIX_LEN, PREFIX_LEN);
-                  }
-                }, 0);
-              }}
-              onClick={(e) => {
-                if (e.target.selectionStart < PREFIX_LEN) {
-                  e.target.setSelectionRange(PREFIX_LEN, PREFIX_LEN);
-                }
-              }}
+              onChange={(e) =>
+                setForm({ ...form, phone: e.target.value })
+              }
             >
               {(inputProps) => (
                 <input
@@ -155,7 +125,7 @@ export default function CTA({ onOpenPrivacy, onOpenTerms }) {
                   type="tel"
                   name="phone"
                   placeholder="+998 __ ___ __ __"
-                  className="w-full p-3 font-mono tracking-wide bg-white border border-gray-200 rounded-lg"
+                  className="w-full p-3 bg-white border border-gray-200 rounded-lg"
                   required
                 />
               )}
@@ -212,7 +182,7 @@ export default function CTA({ onOpenPrivacy, onOpenTerms }) {
               </span>
             </label>
 
-            {/* SUBMIT BUTTON */}
+            {/* SUBMIT */}
             <button
               type="submit"
               disabled={loading}
