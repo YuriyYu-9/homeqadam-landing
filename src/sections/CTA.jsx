@@ -8,99 +8,69 @@ import { sanitize, buildTelegramMessage } from "../utils/security";
 export default function CTA({ onOpenPrivacy, onOpenTerms }) {
   const { dict } = useContext(LangContext);
 
-  const [loading, setLoading] = useState(false);
-  const [successOpen, setSuccessOpen] = useState(false);
-
   const [form, setForm] = useState({
     name: "",
-    phone: "+998 00 000 00 00",
+    phone: "",
     service: "",
     description: "",
-    agree: false,
     secret: "",
   });
 
+  const [success, setSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-
-    setForm({
-      ...form,
-      [name]: type === "checkbox" ? checked : value,
-    });
-  };
-
-  const validate = () => {
-    if (form.secret.trim() !== "") return false;
-
-    if (!/^[A-Za-zА-Яа-яЁёЎўҚқҒғҲҳ’' ]{2,30}$/.test(form.name)) {
-      alert("Введите корректное имя.");
-      return false;
-    }
-
-    if (!/^\+998 \d{2} \d{3} \d{2} \d{2}$/.test(form.phone)) {
-      alert("Введите корректный номер телефона в формате +998 90 000 00 00.");
-      return false;
-    }
-
-    if (!form.service) {
-      alert("Выберите тип услуги.");
-      return false;
-    }
-
-    if (form.description.trim().length < 5) {
-      alert("Опишите задачу более подробно.");
-      return false;
-    }
-
-    if (!form.agree) {
-      alert("Необходимо согласиться с условиями.");
-      return false;
-    }
-
-    return true;
+    setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!validate()) return;
+    if (form.secret.trim() !== "") return;
+
+    if (
+      !form.name.trim() ||
+      !form.phone.includes("_") === false ||
+      !form.service.trim() ||
+      !form.description.trim()
+    ) {
+      alert(dict.cta.fillAllFields || "Заполните все поля");
+      return;
+    }
 
     setLoading(true);
 
-    const safeForm = {
+    const sanitizedData = {
       name: sanitize(form.name),
       phone: sanitize(form.phone),
       service: sanitize(form.service),
       description: sanitize(form.description),
     };
 
-    const message = buildTelegramMessage(safeForm);
+    const message = buildTelegramMessage(sanitizedData);
 
     try {
       const res = await fetch("/api/sendMessage", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...safeForm, message }),
+        body: JSON.stringify({ text: message }),
       });
 
-      if (res.ok) {
-        setSuccessOpen(true);
-        setForm({
-          name: "",
-          phone: "+998 00 000 00 00",
-          service: "",
-          description: "",
-          agree: false,
-          secret: "",
-        });
-      } else {
-        alert("Ошибка отправки. Попробуйте позже.");
-      }
-    } catch (err) {
-      alert("Ошибка соединения. Попробуйте позже.");
-    }
+      if (!res.ok) throw new Error("Send error");
 
-    setLoading(false);
+      setSuccess(true);
+      setForm({
+        name: "",
+        phone: "",
+        service: "",
+        description: "",
+        secret: "",
+      });
+    } catch (err) {
+      alert(dict.cta.error || "Ошибка. Попробуйте позже.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -119,6 +89,7 @@ export default function CTA({ onOpenPrivacy, onOpenTerms }) {
             onSubmit={handleSubmit}
             className="p-6 space-y-4 border border-blue-100 shadow-md bg-blue-50 rounded-xl"
           >
+            {/* Honeypot */}
             <input
               type="text"
               name="secret"
@@ -128,6 +99,7 @@ export default function CTA({ onOpenPrivacy, onOpenTerms }) {
               onChange={handleChange}
             />
 
+            {/* NAME */}
             <input
               type="text"
               name="name"
@@ -138,52 +110,66 @@ export default function CTA({ onOpenPrivacy, onOpenTerms }) {
               required
             />
 
+            {/* PHONE WITH MASK */}
+            {/* PHONE WITH MASK (код страны нельзя менять) */}
             <InputMask
               mask="+998 99 999 99 99"
-              maskChar={null}
-              value={form.phone}
+              maskChar="_"
+              value={form.phone || "+998 "}
               onChange={(e) => {
-                let v = e.target.value;
+                const v = e.target.value;
 
-                if (!v.startsWith("+998 ")) {
-                  v = "+998 " + v.replace(/^\+998\s*/, "");
-                }
-
-                v = v.replace(/[^\d+ ]/g, "");
+                // Всегда принудительно возвращаем начало строки
+                if (!v.startsWith("+998 ")) return;
 
                 setForm({ ...form, phone: v });
+              }}
+              onFocus={(e) => {
+                // При фокусе ставим курсор строго в позицию после "+998 "
+                const prefixLength = 5; // "+998 "
+                setTimeout(() => {
+                  if (e.target.selectionStart < prefixLength) {
+                    e.target.setSelectionRange(prefixLength, prefixLength);
+                  }
+                }, 0);
+              }}
+              onClick={(e) => {
+                // Запрещаем кликать внутрь префикса
+                const prefixLength = 5;
+                if (e.target.selectionStart < prefixLength) {
+                  e.target.setSelectionRange(prefixLength, prefixLength);
+                }
               }}
             >
               {(inputProps) => (
                 <input
                   {...inputProps}
-                  type="text"
+                  type="tel"
                   name="phone"
-                  placeholder="+998 90 000 00 00"
+                  placeholder="+998 __ ___ __ __"
                   className="w-full p-3 bg-white border border-gray-200 rounded-lg"
                   required
                 />
               )}
             </InputMask>
 
+            {/* SERVICE */}
             <select
               name="service"
               value={form.service}
               onChange={handleChange}
-              required
               className="w-full p-3 bg-white border border-gray-200 rounded-lg"
+              required
             >
-              <option value="" disabled>
-                {dict.cta.service}
-              </option>
-
-              {dict.categoriesList.map((cat, i) => (
-                <option key={i} value={cat}>
-                  {cat}
+              <option value="">{dict.cta.service}</option>
+              {dict.categoriesList.map((c, i) => (
+                <option key={i} value={c}>
+                  {c}
                 </option>
               ))}
             </select>
 
+            {/* DESCRIPTION */}
             <textarea
               name="description"
               value={form.description}
@@ -194,16 +180,9 @@ export default function CTA({ onOpenPrivacy, onOpenTerms }) {
               required
             />
 
+            {/* AGREEMENT */}
             <label className="flex items-start gap-2 text-xs md:text-sm">
-              <input
-                type="checkbox"
-                name="agree"
-                checked={form.agree}
-                onChange={handleChange}
-                className="mt-1"
-                required
-              />
-
+              <input type="checkbox" required className="mt-1" />
               <span>
                 {dict.cta.agree1}{" "}
                 <button
@@ -225,18 +204,22 @@ export default function CTA({ onOpenPrivacy, onOpenTerms }) {
               </span>
             </label>
 
+            {/* SUBMIT */}
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3 font-semibold text-white transition bg-blue-600 rounded-lg hover:bg-blue-700"
+              className="w-full py-3 font-semibold text-white transition bg-blue-600 rounded-lg hover:bg-blue-700 disabled:opacity-60"
             >
-              {loading ? "Отправка..." : dict.cta.submit}
+              {loading ? dict.cta.loading || "Отправка..." : dict.cta.submit}
             </button>
           </form>
         </div>
       </Container>
 
-      <SuccessModal open={successOpen} onClose={() => setSuccessOpen(false)} />
+      {/* SUCCESS MODAL */}
+      {success && (
+        <SuccessModal onClose={() => setSuccess(false)} dict={dict} />
+      )}
     </section>
   );
 }
