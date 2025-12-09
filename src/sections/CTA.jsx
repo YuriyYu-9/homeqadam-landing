@@ -13,7 +13,7 @@ export default function CTA({ onOpenPrivacy, onOpenTerms }) {
 
   const [form, setForm] = useState({
     name: "",
-    phone: "+998 00 000 00 00",
+    phone: "",               // <-- теперь пустое по умолчанию
     service: "",
     description: "",
     agree: false,
@@ -22,13 +22,13 @@ export default function CTA({ onOpenPrivacy, onOpenTerms }) {
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-
     setForm({
       ...form,
       [name]: type === "checkbox" ? checked : value,
     });
   };
 
+  // ---------------- VALIDATION ------------------
   const validate = () => {
     if (form.secret.trim() !== "") return false;
 
@@ -37,8 +37,9 @@ export default function CTA({ onOpenPrivacy, onOpenTerms }) {
       return false;
     }
 
+    // Проверка формата после заполнения
     if (!/^\+998 \d{2} \d{3} \d{2} \d{2}$/.test(form.phone)) {
-      alert("Введите корректный номер телефона в формате +998 90 000 00 00.");
+      alert("Введите корректный номер телефона.");
       return false;
     }
 
@@ -60,6 +61,7 @@ export default function CTA({ onOpenPrivacy, onOpenTerms }) {
     return true;
   };
 
+  // ---------------- SUBMIT ------------------
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -80,14 +82,15 @@ export default function CTA({ onOpenPrivacy, onOpenTerms }) {
       const res = await fetch("/api/sendMessage", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...safeForm, message }),
+        body: JSON.stringify({ message }),   // <-- твой API принимает "message"
       });
 
       if (res.ok) {
         setSuccessOpen(true);
+
         setForm({
           name: "",
-          phone: "+998 00 000 00 00",
+          phone: "",       // <-- снова очищаем
           service: "",
           description: "",
           agree: false,
@@ -101,6 +104,28 @@ export default function CTA({ onOpenPrivacy, onOpenTerms }) {
     }
 
     setLoading(false);
+  };
+
+  // ---------------- PHONE LOGIC ------------------
+
+  const handlePhoneFocus = () => {
+    if (!form.phone.trim()) {
+      setForm({ ...form, phone: "+998 " });
+    }
+  };
+
+  const handlePhoneChange = (e) => {
+    let v = e.target.value;
+
+    // Не даём стирать код страны
+    if (!v.startsWith("+998 ")) {
+      v = "+998 " + v.replace(/^\+?998\s*/, "");
+    }
+
+    // Убираем лишние символы, кроме цифр и пробелов
+    v = v.replace(/[^\d+ ]/g, "");
+
+    setForm({ ...form, phone: v });
   };
 
   return (
@@ -119,6 +144,7 @@ export default function CTA({ onOpenPrivacy, onOpenTerms }) {
             onSubmit={handleSubmit}
             className="p-6 space-y-4 border border-blue-100 shadow-md bg-blue-50 rounded-xl"
           >
+            {/* Honeypot */}
             <input
               type="text"
               name="secret"
@@ -128,6 +154,7 @@ export default function CTA({ onOpenPrivacy, onOpenTerms }) {
               onChange={handleChange}
             />
 
+            {/* NAME */}
             <input
               type="text"
               name="name"
@@ -138,34 +165,27 @@ export default function CTA({ onOpenPrivacy, onOpenTerms }) {
               required
             />
 
+            {/* PHONE */}
             <InputMask
               mask="+998 99 999 99 99"
-              maskChar={null}
+              maskChar="_"
               value={form.phone}
-              onChange={(e) => {
-                let v = e.target.value;
-
-                if (!v.startsWith("+998 ")) {
-                  v = "+998 " + v.replace(/^\+998\s*/, "");
-                }
-
-                v = v.replace(/[^\d+ ]/g, "");
-
-                setForm({ ...form, phone: v });
-              }}
+              onFocus={handlePhoneFocus}
+              onChange={handlePhoneChange}
             >
               {(inputProps) => (
                 <input
                   {...inputProps}
                   type="text"
                   name="phone"
-                  placeholder="+998 90 000 00 00"
+                  placeholder="Введите номер телефона"
                   className="w-full p-3 bg-white border border-gray-200 rounded-lg"
                   required
                 />
               )}
             </InputMask>
 
+            {/* SERVICE */}
             <select
               name="service"
               value={form.service}
@@ -184,6 +204,7 @@ export default function CTA({ onOpenPrivacy, onOpenTerms }) {
               ))}
             </select>
 
+            {/* DESCRIPTION */}
             <textarea
               name="description"
               value={form.description}
@@ -194,6 +215,7 @@ export default function CTA({ onOpenPrivacy, onOpenTerms }) {
               required
             />
 
+            {/* AGREEMENT */}
             <label className="flex items-start gap-2 text-xs md:text-sm">
               <input
                 type="checkbox"
