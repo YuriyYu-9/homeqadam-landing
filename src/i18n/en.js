@@ -3,19 +3,21 @@ export const en = {
     services: "Services",
     how: "How it works",
     contacts: "Contacts",
-    about: "About",
+    about: "About us",
   },
 
   hero: {
-    top: "HomeQadam — making life easier",
-    title: "Home & technical experts — in one step",
-    text1: "We help you quickly find trusted professionals.",
-    text2: "Explore specialists on the right and submit a request.",
+    top: "HomeQadam — making life more comfortable",
+    title: "Home & technical specialists — in one step",
+    text1:
+      "We help you quickly find trusted professionals for household tasks: from electrical and plumbing work to cleaning and appliance repair.",
+    text2:
+      "View available specialists and submit a request — we will contact you to clarify the details.",
   },
 
   cta: {
-    title: "Find the right specialist",
-    desc: "Electricians, plumbers, cleaners, repair professionals and more.",
+    title: "Find a specialist for any task",
+    desc: "Electricians, plumbers, cleaning or appliance repair — submit a request and our operators will contact you.",
     name: "Your name",
     phone: "Phone or Telegram",
     service: "Service type",
@@ -28,11 +30,10 @@ export const en = {
   },
 
   success: {
-  title: "Request sent!",
-  message: "Thank you! We have received your request and will contact you soon.",
-  ok: "OK"
-},
-
+    title: "Request sent!",
+    message: "Thank you! We have received your request and will contact you soon.",
+    ok: "OK",
+  },
 
   specialists: [
     "Electrician",
@@ -46,19 +47,14 @@ export const en = {
   ],
 
   categories: {
-  title: "Service categories"
-},
-
+    title: "Service categories",
+  },
 
   categoriesList: [
     "Electrical",
     "Plumbing",
     "Cleaning",
     "Appliance repair",
-    "Furniture assembly",
-    "Movers",
-    "Handyman",
-    "Tutors",
   ],
 
   advantages: { title: "Why choose HomeQadam" },
@@ -66,17 +62,17 @@ export const en = {
   advantagesList: [
     {
       title: "Verified specialists",
-      text: "Each technician is manually reviewed.",
+      text: "Each technician undergoes manual profile and category verification.",
       icon: "✓",
     },
     {
       title: "Fast request submission",
-      text: "Fill a request in less than a minute.",
+      text: "Submit a request in under a minute — we will contact you as quickly as possible.",
       icon: "⚡",
     },
     {
-      title: "Convenient & transparent",
-      text: "You choose the performer and agree on terms.",
+      title: "Convenience and transparency",
+      text: "You choose the specialist and agree on the terms directly.",
       icon: "★",
     },
   ],
@@ -86,27 +82,27 @@ export const en = {
   stepsList: [
     {
       title: "Submit a request",
-      text: "Describe your task briefly.",
+      text: "Describe your task — it takes less than a minute.",
     },
     {
-      title: "We find a specialist",
-      text: "We match you with suitable professionals.",
+      title: "We select a specialist",
+      text: "The system will suggest suitable technicians.",
     },
     {
       title: "Discuss details",
-      text: "Agree on price and time via chat.",
+      text: "Connect in chat and discuss conditions.",
     },
     {
-      title: "Work completed",
-      text: "The specialist arrives and completes the job.",
+      title: "Task completed",
+      text: "The technician arrives and performs the work.",
     },
   ],
 
   about: {
     title: "About us",
-    p1: "HomeQadam helps users find trusted specialists.",
-    p2: "Our mission is convenience and transparency.",
-    p3: "This is an educational project.",
+    p1: "HomeQadam helps users quickly find verified specialists.",
+    p2: "Our mission is convenience, transparency and quality.",
+    p3: "The project is created for educational purposes.",
   },
 
   footer: {
@@ -115,48 +111,49 @@ export const en = {
   },
 
   modal: {
-  close: "Close",
+    close: "Close",
 
-  privacy: `
-This Privacy Policy is created for educational purposes and describes how personal data 
-is handled within the demonstration project “HomeQadam”.
+    privacy: `
+This Privacy Policy is created for educational purposes and defines the procedure  
+for processing users' personal data within the demonstration project “HomeQadam”.
 
-1. Data we collect  
-Only the information voluntarily provided by the user is processed:
-— name or alias;  
+1. Collected data  
+We process only the information voluntarily provided by the user:
+— name or nickname;  
 — phone number or messenger contact;  
-— task description.  
+— task description or request.
 
-2. Purpose of data processing  
-Data is used solely to simulate the process of matching a specialist and to demonstrate 
-the mechanics of an online service.
+2. Purpose of processing  
+The data is used solely to simulate the specialist-selection process and  
+demonstrate how an online service works.
 
-3. Data disclosure  
-No information is transferred to third parties. All data is used only within the study project.
+3. Transfer to third parties  
+Data is not shared with third parties and is used only within the educational project.
 
-4. Storage and removal  
-Information is kept temporarily and can be deleted at the user's request.
+4. Storage and deletion  
+Information is stored for a limited time and can be deleted upon user request.
 
-5. Disclaimer  
-This is a non-commercial educational project. No real services are provided.
+5. Responsibility  
+The project is not a commercial service and does not guarantee actual service  
+delivery or selection of real specialists.
 `,
 
-  terms: `
-This User Agreement outlines the rules for using the demonstration project “HomeQadam”.
+    terms: `
+This User Agreement defines the rules for using the demonstration project “HomeQadam”.
 
 1. Project status  
-HomeQadam is an educational project created solely for demonstration of service logic.
+HomeQadam is an educational project used solely to demonstrate online-service logic.
 
-2. User responsibility  
-The user confirms that the provided data is accurate and agrees that it is used only for educational purposes.
+2. User obligations  
+The user guarantees the accuracy of the provided information and agrees that it is  
+used only for educational purposes.
 
 3. Limitation of liability  
-The authors of the project are not responsible for any consequences arising from the use 
-of the provided information. 
+The authors of the project are not responsible for any consequences of using  
+information provided within the service.
 
-4. Updates  
-The project team may update these terms for the purpose of improving the educational model.
-`
-}
-,
+4. Changing conditions  
+The authors may update the agreement texts at any time to improve the educational model.
+`,
+  },
 };
