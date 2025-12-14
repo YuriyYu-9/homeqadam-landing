@@ -8,7 +8,7 @@ export function buildTelegramMessage(data) {
   const now = new Date().toLocaleString();
 
   return (
-    "🆕 *Новая заявка с HomeQadam*\n\n" +
+    "🆕 *Новая заявка с Osonly*\n\n" +
     `👤 *Имя:* ${data.name}\n` +
     `📞 *Контакт:* ${data.phone}\n` +
     `🔧 *Услуга:* ${data.service}\n` +
