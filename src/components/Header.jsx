@@ -14,7 +14,7 @@ export default function Header() {
       <Container className="flex items-center justify-between">
         {/* Лого */}
         <div className="text-xl font-bold text-blue-600">
-          HomeQadam
+          Osonly
         </div>
 
         {/* Десктоп-меню */}

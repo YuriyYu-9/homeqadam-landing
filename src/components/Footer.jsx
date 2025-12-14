@@ -11,7 +11,7 @@ export default function Footer({ onOpenPrivacy, onOpenTerms }) {
         <div className="flex flex-col items-center justify-between gap-6 md:flex-row">
           {/* Логотип */}
           <div className="text-xl font-semibold">
-            HomeQadam
+            Osonly
           </div>
 
           {/* Навигация */}
@@ -46,7 +46,7 @@ export default function Footer({ onOpenPrivacy, onOpenTerms }) {
         </div>
 
         <div className="mt-10 text-xs text-center text-gray-500">
-          © {new Date().getFullYear()} HomeQadam. All rights reserved.
+          © {new Date().getFullYear()} Osonly. All rights reserved.
         </div>
       </Container>
     </footer>

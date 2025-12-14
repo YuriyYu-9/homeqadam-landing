@@ -7,25 +7,25 @@ export const uz = {
   },
 
   hero: {
-    top: "HomeQadam — hayotni yanada qulay qilamiz",
-    title: "Uy va texnika ustalari — bir qadamda",
+    top: "Osonly — hayotni osonlashtiramiz",
+    title: "Uy va texnika uchun mutaxassislar — bir qadamda",
     text1:
-      "Biz ishonchli mutaxassislarni tezda topishga yordam beramiz: elektr va santexnika ishlaridan boshlab tozalash va texnika ta’mirigacha.",
+      "Biz kundalik vazifalar uchun ishonchli mutaxassislarni tez topishga yordam beramiz: elektr va santexnika ishlaridan tortib tozalash, texnika taʼmiri va mebel yigʻishgacha.",
     text2:
-      "Mavjud ustalarni ko‘ring va ariza qoldiring — batafsil ma’lumot uchun siz bilan bog‘lanamiz.",
+      "Mavjud mutaxassislarni ko‘rib chiqing va ariza qoldiring — tafsilotlarni aniqlash uchun siz bilan bog‘lanamiz.",
   },
 
   cta: {
-    title: "Istalgan vazifa uchun mutaxassis toping",
-    desc: "Elektrik, santexnik, tozalash yoki texnika ta’miri — ariza qoldiring va operatorlarimiz siz bilan bog‘lanadi.",
+    title: "Har qanday vazifa uchun mutaxassis toping",
+    desc: "Elektriklar, santexniklar, tozalash yoki texnika taʼmiri — ariza qoldiring, operatorlarimiz siz bilan bog‘lanadi.",
     name: "Ismingiz",
     phone: "Telefon yoki Telegram",
     service: "Xizmat turi",
-    descField: "Vazifani tavsiflang",
-    agree1: "Men roziman",
+    descField: "Vazifangizni tavsiflang",
+    agree1: "Men",
     agreePrivacy: "Maxfiylik siyosati",
     agreeAnd: "va",
-    agreeTerms: "Foydalanuvchi shartlari",
+    agreeTerms: "Foydalanuvchi kelishuvi",
     submit: "Ariza yuborish",
   },
 
@@ -39,40 +39,40 @@ export const uz = {
     "Elektrik",
     "Santexnik",
     "Tozalovchi",
-    "Texnika ta’miri",
+    "Texnika taʼmiri",
     "Mebel yig‘ish",
-    "Yuk ko‘taruvchi",
-    "Usta",
+    "Yuk tashuvchi",
+    "Mayda taʼmirlash",
     "Repetitor",
   ],
 
   categories: {
-    title: "Xizmat turlari",
+    title: "Xizmatlar kategoriyalari",
   },
 
   categoriesList: [
-    "Elektrika",
+    "Elektr ishlari",
     "Santexnika",
     "Tozalash",
-    "Texnika ta’miri",
+    "Texnika taʼmiri",
   ],
 
-  advantages: { title: "Nega HomeQadam?" },
+  advantages: { title: "Nega Osonly" },
 
   advantagesList: [
     {
       title: "Tekshirilgan mutaxassislar",
-      text: "Har bir usta profil va kategoriyalar bo‘yicha qo‘lda tekshiruvdan o‘tadi.",
+      text: "Har bir mutaxassis profili va yo‘nalishi qo‘lda tekshiriladi.",
       icon: "✓",
     },
     {
       title: "Tez ariza topshirish",
-      text: "Arizani 1 daqiqada yuboring — biz imkon qadar tez bog‘lanamiz.",
+      text: "1 daqiqada ariza qoldiring — biz imkon qadar tez bog‘lanamiz.",
       icon: "⚡",
     },
     {
       title: "Qulaylik va shaffoflik",
-      text: "Siz ustani o‘zingiz tanlaysiz va shartlarni kelishasiz.",
+      text: "Mutaxassisni o‘zingiz tanlaysiz va shartlarni kelishasiz.",
       icon: "★",
     },
   ],
@@ -81,76 +81,77 @@ export const uz = {
 
   stepsList: [
     {
-      title: "Ariza yuboring",
-      text: "Vazifani qisqacha tasvirlang — bu bir daqiqadan kam vaqt oladi.",
+      title: "Ariza qoldiring",
+      text: "Vazifangizni yozing — bu bir daqiqadan kam vaqt oladi.",
     },
     {
-      title: "Usta tanlab beramiz",
-      text: "Tizim mos keladigan mutaxassislarni taklif qiladi.",
+      title: "Mutaxassis tanlanadi",
+      text: "Tizim mos mutaxassislarni taklif qiladi.",
     },
     {
-      title: "Tafsilotlarni muhokama qiling",
-      text: "Chat orqali bog‘lanib, shartlarni kelishasiz.",
+      title: "Tafsilotlarni kelishing",
+      text: "Chat orqali bog‘lanib, shartlarni muhokama qiling.",
     },
     {
-      title: "Vazifa bajariladi",
-      text: "Usta yetib keladi va ishni bajaradi.",
+      title: "Vazifa bajarildi",
+      text: "Mutaxassis keladi va ishni bajaradi.",
     },
   ],
 
   about: {
     title: "Biz haqimizda",
-    p1: "HomeQadam foydalanuvchilarga tasdiqlangan mutaxassislarni tez topishda yordam beradi.",
-    p2: "Bizning maqsad — qulaylik, shaffoflik va sifat.",
-    p3: "Loyiha o‘quv maqsadlari uchun yaratilgan.",
+    p1: "Osonly foydalanuvchilarga ishonchli mutaxassislarni tez topishga yordam beradi.",
+    p2: "Bizning maqsadimiz — qulaylik, shaffoflik va sifat.",
+    p3: "Loyiha taʼlimiy maqsadlarda yaratilgan.",
   },
 
   footer: {
     privacy: "Maxfiylik siyosati",
-    terms: "Foydalanuvchi shartlari",
+    terms: "Foydalanuvchi kelishuvi",
   },
 
   modal: {
     close: "Yopish",
 
     privacy: `
-Ushbu Maxfiylik siyosati o‘quv maqsadlarida tuzilgan bo‘lib, 
-“HomeQadam” loyihasi doirasida foydalanuvchi ma’lumotlarini qayta ishlash tartibini belgilaydi.
+Ushbu Maxfiylik siyosati taʼlimiy maqsadlarda ishlab chiqilgan bo‘lib,
+“Osonly” namoyish loyihasi doirasida foydalanuvchi maʼlumotlarini
+qayta ishlash tartibini belgilaydi.
 
-1. Yig‘iladigan ma’lumotlar  
-Biz faqat foydalanuvchi ixtiyoriy ravishda taqdim etgan ma’lumotlarni qayta ishlaymiz:
+1. Yig‘iladigan maʼlumotlar  
+Foydalanuvchi tomonidan ixtiyoriy ravishda taqdim etilgan maʼlumotlar:
 — ism yoki taxallus;  
 — telefon raqami yoki messenjer kontakti;  
-— vazifa tavsifi yoki so‘rov.
+— vazifa tavsifi.
 
 2. Qayta ishlash maqsadi  
-Ma’lumotlar faqat mutaxassis tanlash jarayonini imitatsiya qilish va 
-xizmat qanday ishlashini namoyish etish uchun qo‘llaniladi.
+Maʼlumotlar faqat mutaxassis tanlash jarayonini namoyish qilish
+va servis ishlash tamoyillarini ko‘rsatish uchun ishlatiladi.
 
-3. Uchinchilarga berish  
-Ma’lumotlar uchinchi shaxslarga berilmaydi va faqat o‘quv loyihasi doirasida ishlatiladi.
+3. Uchinchi shaxslarga uzatish  
+Maʼlumotlar uchinchi shaxslarga berilmaydi va faqat o‘quv loyihasi doirasida qo‘llaniladi.
 
 4. Saqlash va o‘chirish  
-Ma’lumotlar cheklangan muddat davomida saqlanadi va foydalanuvchi talabiga binoan o‘chirib tashlanadi.
+Maʼlumotlar cheklangan muddat saqlanadi va foydalanuvchi talabiga binoan o‘chirilishi mumkin.
 
-5. Mas’uliyat  
-Loyiha tijorat xizmati emas va haqiqiy xizmat ko‘rsatishni yoki mutaxassis topishni kafolatlamaydi.
+5. Masʼuliyat  
+Loyiha tijorat xizmati emas va real xizmat ko‘rsatish yoki ijrochilarni taqdim etishni kafolatlamaydi.
 `,
 
     terms: `
-Ushbu Foydalanuvchi shartnomasi “HomeQadam” demo-loyihasidan foydalanish qoidalarini belgilaydi.
+Ushbu Foydalanuvchi kelishuvi “Osonly” namoyish loyihasidan foydalanish qoidalarini belgilaydi.
 
-1. Loyiha holati  
-HomeQadam o‘quv loyihasi bo‘lib, onlayn-servislar qanday ishlashini ko‘rsatish uchun yaratilgan.
+1. Loyiha maqomi  
+Osonly — onlayn xizmatlar ishlash mantiqini ko‘rsatish uchun yaratilgan taʼlimiy loyiha.
 
 2. Foydalanuvchi majburiyatlari  
-Foydalanuvchi taqdim etayotgan ma’lumotlarning to‘g‘ri ekanini tasdiqlaydi va ular faqat o‘quv maqsadlarida ishlatilishiga rozi bo‘ladi.
+Foydalanuvchi taqdim etilgan maʼlumotlarning to‘g‘riligiga kafolat beradi va ular faqat taʼlimiy maqsadlarda ishlatilishiga rozilik bildiradi.
 
-3. Mas’uliyatni cheklash  
-Loyiha mualliflari xizmatdan foydalanish natijasida yuzaga kelishi mumkin bo‘lgan oqibatlar uchun javobgar emas.
+3. Masʼuliyatni cheklash  
+Loyiha mualliflari taqdim etilgan maʼlumotlardan foydalanish oqibatlari uchun javobgar emas.
 
 4. Shartlarni o‘zgartirish  
-Mualliflar modelni yaxshilash maqsadida shartnomadagi matnlarni istalgan vaqtda yangilashi mumkin.
+Mualliflar xizmatning taʼlimiy modelini yaxshilash maqsadida kelishuv matnlarini istalgan vaqtda yangilashlari mumkin.
 `,
   },
 };
