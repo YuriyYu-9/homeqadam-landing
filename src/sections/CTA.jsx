@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import Container from "../layouts/Container";
 import { LangContext } from "../i18n/context";
-import InputMask from "react-input-mask";
+import { PatternFormat } from "react-number-format";
 import SuccessModal from "../components/SuccessModal";
 import { sanitize, buildTelegramMessage } from "../utils/security";
 
@@ -13,7 +13,7 @@ export default function CTA({ onOpenPrivacy, onOpenTerms }) {
 
   const [form, setForm] = useState({
     name: "",
-    phone: "",               // <-- теперь пустое по умолчанию
+    phone: "",
     service: "",
     description: "",
     agree: false,
@@ -28,7 +28,8 @@ export default function CTA({ onOpenPrivacy, onOpenTerms }) {
     });
   };
 
-  // ---------------- VALIDATION ------------------
+  /* ================= VALIDATION ================= */
+
   const validate = () => {
     if (form.secret.trim() !== "") return false;
 
@@ -37,7 +38,6 @@ export default function CTA({ onOpenPrivacy, onOpenTerms }) {
       return false;
     }
 
-    // Проверка формата после заполнения
     if (!/^\+998 \d{2} \d{3} \d{2} \d{2}$/.test(form.phone)) {
       alert("Введите корректный номер телефона.");
       return false;
@@ -61,10 +61,10 @@ export default function CTA({ onOpenPrivacy, onOpenTerms }) {
     return true;
   };
 
-  // ---------------- SUBMIT ------------------
+  /* ================= SUBMIT ================= */
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (!validate()) return;
 
     setLoading(true);
@@ -82,15 +82,14 @@ export default function CTA({ onOpenPrivacy, onOpenTerms }) {
       const res = await fetch("/api/sendMessage", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message }),   // <-- твой API принимает "message"
+        body: JSON.stringify({ message }),
       });
 
       if (res.ok) {
         setSuccessOpen(true);
-
         setForm({
           name: "",
-          phone: "",       // <-- снова очищаем
+          phone: "",
           service: "",
           description: "",
           agree: false,
@@ -99,33 +98,11 @@ export default function CTA({ onOpenPrivacy, onOpenTerms }) {
       } else {
         alert("Ошибка отправки. Попробуйте позже.");
       }
-    } catch (err) {
+    } catch {
       alert("Ошибка соединения. Попробуйте позже.");
     }
 
     setLoading(false);
-  };
-
-  // ---------------- PHONE LOGIC ------------------
-
-  const handlePhoneFocus = () => {
-    if (!form.phone.trim()) {
-      setForm({ ...form, phone: "+998 " });
-    }
-  };
-
-  const handlePhoneChange = (e) => {
-    let v = e.target.value;
-
-    // Не даём стирать код страны
-    if (!v.startsWith("+998 ")) {
-      v = "+998 " + v.replace(/^\+?998\s*/, "");
-    }
-
-    // Убираем лишние символы, кроме цифр и пробелов
-    v = v.replace(/[^\d+ ]/g, "");
-
-    setForm({ ...form, phone: v });
   };
 
   return (
@@ -166,24 +143,18 @@ export default function CTA({ onOpenPrivacy, onOpenTerms }) {
             />
 
             {/* PHONE */}
-            <InputMask
-              mask="+998 99 999 99 99"
-              maskChar="_"
+            <PatternFormat
+              format="+998 ## ### ## ##"
+              allowEmptyFormatting
+              mask="_"
               value={form.phone}
-              onFocus={handlePhoneFocus}
-              onChange={handlePhoneChange}
-            >
-              {(inputProps) => (
-                <input
-                  {...inputProps}
-                  type="text"
-                  name="phone"
-                  placeholder="Введите номер телефона"
-                  className="w-full p-3 bg-white border border-gray-200 rounded-lg"
-                  required
-                />
-              )}
-            </InputMask>
+              onValueChange={(values) =>
+                setForm({ ...form, phone: values.formattedValue })
+              }
+              placeholder="Введите номер телефона"
+              className="w-full p-3 bg-white border border-gray-200 rounded-lg"
+              required
+            />
 
             {/* SERVICE */}
             <select
@@ -225,7 +196,6 @@ export default function CTA({ onOpenPrivacy, onOpenTerms }) {
                 className="mt-1"
                 required
               />
-
               <span>
                 {dict.cta.agree1}{" "}
                 <button

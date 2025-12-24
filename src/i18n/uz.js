@@ -8,25 +8,34 @@ export const uz = {
 
   hero: {
     top: "Osonly — hayotni osonlashtiramiz",
-    title: "Uy va texnika uchun mutaxassislar — bir qadamda",
+    title: "Uy va texnika mutaxassislari — bir qadamda",
     text1:
-      "Biz kundalik vazifalar uchun ishonchli mutaxassislarni tez topishga yordam beramiz: elektr va santexnika ishlaridan tortib tozalash, texnika taʼmiri va mebel yigʻishgacha.",
+      "Biz kundalik vazifalar uchun ishonchli mutaxassislarni tez topishga yordam beramiz: elektr va santexnika ishlaridan tortib tozalash, texnika taʼmiri va mebel yig‘ishgacha.",
     text2:
       "Mavjud mutaxassislarni ko‘rib chiqing va ariza qoldiring — tafsilotlarni aniqlash uchun siz bilan bog‘lanamiz.",
   },
 
   cta: {
     title: "Har qanday vazifa uchun mutaxassis toping",
-    desc: "Elektriklar, santexniklar, tozalash yoki texnika taʼmiri — ariza qoldiring, operatorlarimiz siz bilan bog‘lanadi.",
+    desc:
+      "Elektriklar, santexniklar, tozalash yoki texnika taʼmiri — ariza qoldiring va operatorlarimiz siz bilan bog‘lanadi.",
     name: "Ismingiz",
     phone: "Telefon yoki Telegram",
     service: "Xizmat turi",
-    descField: "Vazifangizni tavsiflang",
+    descField: "Vazifani tavsiflang",
     agree1: "Men",
     agreePrivacy: "Maxfiylik siyosati",
     agreeAnd: "va",
     agreeTerms: "Foydalanuvchi kelishuvi",
     submit: "Ariza yuborish",
+  },
+
+  /* ===== VEB-ILOVAGA O‘TISH UCHUN CTA ===== */
+  appCta: {
+    title: "Osonly veb-ilovasini oching",
+    text:
+      "Buyurtmalar yarating, mutaxassislarni tanlang va xizmatlarni bevosita shaxsiy kabinetingizda boshqaring.",
+    button: "Veb-ilovani ochish",
   },
 
   success: {
@@ -47,7 +56,7 @@ export const uz = {
   ],
 
   categories: {
-    title: "Xizmatlar kategoriyalari",
+    title: "Xizmat toifalari",
   },
 
   categoriesList: [
@@ -57,22 +66,22 @@ export const uz = {
     "Texnika taʼmiri",
   ],
 
-  advantages: { title: "Nega Osonly" },
+  advantages: { title: "Nega Osonly tanlanadi" },
 
   advantagesList: [
     {
       title: "Tekshirilgan mutaxassislar",
-      text: "Har bir mutaxassis profili va yo‘nalishi qo‘lda tekshiriladi.",
+      text: "Har bir mutaxassis profili va toifasi qo‘lda tekshiruvdan o‘tkaziladi.",
       icon: "✓",
     },
     {
-      title: "Tez ariza topshirish",
-      text: "1 daqiqada ariza qoldiring — biz imkon qadar tez bog‘lanamiz.",
+      title: "Tezkor ariza yuborish",
+      text: "1 daqiqada ariza yuboring — biz imkon qadar tez bog‘lanamiz.",
       icon: "⚡",
     },
     {
       title: "Qulaylik va shaffoflik",
-      text: "Mutaxassisni o‘zingiz tanlaysiz va shartlarni kelishasiz.",
+      text: "Mutaxassisni o‘zingiz tanlaysiz va shartlarni mustaqil kelishasiz.",
       icon: "★",
     },
   ],
@@ -81,16 +90,16 @@ export const uz = {
 
   stepsList: [
     {
-      title: "Ariza qoldiring",
-      text: "Vazifangizni yozing — bu bir daqiqadan kam vaqt oladi.",
+      title: "Ariza yuboring",
+      text: "Vazifani tavsiflang — bu bir daqiqadan kam vaqt oladi.",
     },
     {
       title: "Mutaxassis tanlanadi",
       text: "Tizim mos mutaxassislarni taklif qiladi.",
     },
     {
-      title: "Tafsilotlarni kelishing",
-      text: "Chat orqali bog‘lanib, shartlarni muhokama qiling.",
+      title: "Tafsilotlarni muhokama qiling",
+      text: "Chat orqali bog‘lanib, shartlarni kelishib oling.",
     },
     {
       title: "Vazifa bajarildi",
@@ -101,7 +110,7 @@ export const uz = {
   about: {
     title: "Biz haqimizda",
     p1: "Osonly foydalanuvchilarga ishonchli mutaxassislarni tez topishga yordam beradi.",
-    p2: "Bizning maqsadimiz — qulaylik, shaffoflik va sifat.",
+    p2: "Bizning vazifamiz — soddalik, shaffoflik va sifat.",
     p3: "Loyiha taʼlimiy maqsadlarda yaratilgan.",
   },
 
@@ -115,43 +124,47 @@ export const uz = {
 
     privacy: `
 Ushbu Maxfiylik siyosati taʼlimiy maqsadlarda ishlab chiqilgan bo‘lib,
-“Osonly” namoyish loyihasi doirasida foydalanuvchi maʼlumotlarini
+“Osonly” namoyish loyihasi doirasida foydalanuvchilarning shaxsiy maʼlumotlarini
 qayta ishlash tartibini belgilaydi.
 
-1. Yig‘iladigan maʼlumotlar  
-Foydalanuvchi tomonidan ixtiyoriy ravishda taqdim etilgan maʼlumotlar:
+1. Yig‘iladigan maʼlumotlar turlari  
+Biz faqat foydalanuvchi tomonidan ixtiyoriy ravishda taqdim etilgan maʼlumotlarni qayta ishlaymiz:
 — ism yoki taxallus;  
 — telefon raqami yoki messenjer kontakti;  
-— vazifa tavsifi.
+— vazifa yoki so‘rov tavsifi.  
 
 2. Qayta ishlash maqsadi  
-Maʼlumotlar faqat mutaxassis tanlash jarayonini namoyish qilish
-va servis ishlash tamoyillarini ko‘rsatish uchun ishlatiladi.
+Maʼlumotlar mutaxassis tanlash jarayonini modellashtirish va
+xizmat ishlash tamoyillarini namoyish etish uchun ishlatiladi.
 
-3. Uchinchi shaxslarga uzatish  
-Maʼlumotlar uchinchi shaxslarga berilmaydi va faqat o‘quv loyihasi doirasida qo‘llaniladi.
+3. Maʼlumotlarni uchinchi shaxslarga uzatish  
+Maʼlumotlar uchinchi shaxslarga uzatilmaydi va faqat taʼlimiy loyiha doirasida qo‘llaniladi.
 
-4. Saqlash va o‘chirish  
-Maʼlumotlar cheklangan muddat saqlanadi va foydalanuvchi talabiga binoan o‘chirilishi mumkin.
+4. Maʼlumotlarni saqlash va o‘chirish  
+Maʼlumotlar cheklangan muddat davomida saqlanadi va foydalanuvchining birinchi talabi bilan o‘chirilishi mumkin.
 
-5. Masʼuliyat  
-Loyiha tijorat xizmati emas va real xizmat ko‘rsatish yoki ijrochilarni taqdim etishni kafolatlamaydi.
+5. Javobgarlik  
+Loyiha tijorat xizmati emas va xizmatlar ko‘rsatilishini yoki mutaxassis tanlanishini kafolatlamaydi.
 `,
 
     terms: `
-Ushbu Foydalanuvchi kelishuvi “Osonly” namoyish loyihasidan foydalanish qoidalarini belgilaydi.
+Ushbu Foydalanuvchi kelishuvi
+“Osonly” namoyish loyihasidan foydalanish qoidalarini belgilaydi.
 
 1. Loyiha maqomi  
-Osonly — onlayn xizmatlar ishlash mantiqini ko‘rsatish uchun yaratilgan taʼlimiy loyiha.
+Osonly taʼlimiy loyiha bo‘lib, onlayn xizmatlar ishlash mantiqini namoyish etish uchun mo‘ljallangan.
 
 2. Foydalanuvchi majburiyatlari  
-Foydalanuvchi taqdim etilgan maʼlumotlarning to‘g‘riligiga kafolat beradi va ular faqat taʼlimiy maqsadlarda ishlatilishiga rozilik bildiradi.
+Foydalanuvchi taqdim etilgan maʼlumotlarning to‘g‘riligini kafolatlaydi va
+ular faqat taʼlimiy maqsadlarda ishlatilishiga rozilik bildiradi.
 
-3. Masʼuliyatni cheklash  
-Loyiha mualliflari taqdim etilgan maʼlumotlardan foydalanish oqibatlari uchun javobgar emas.
+3. Javobgarlikni cheklash  
+Loyiha mualliflari xizmat doirasida taqdim etilgan maʼlumotlardan foydalanish natijasida
+kelib chiqadigan har qanday oqibatlar uchun javobgar emas.
 
 4. Shartlarni o‘zgartirish  
-Mualliflar xizmatning taʼlimiy modelini yaxshilash maqsadida kelishuv matnlarini istalgan vaqtda yangilashlari mumkin.
+Loyiha mualliflari taʼlimiy xizmat modelini yaxshilash maqsadida
+kelishuv matnlarini istalgan vaqtda yangilashi mumkin.
 `,
   },
 };

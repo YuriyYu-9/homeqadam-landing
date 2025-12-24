@@ -8,7 +8,7 @@ export const en = {
 
   hero: {
     top: "Osonly — making life easier",
-    title: "Home & tech specialists in one step",
+    title: "Home and tech specialists — in one step",
     text1:
       "We help you quickly find trusted specialists for everyday tasks: from electrical and plumbing work to cleaning, appliance repair, and furniture assembly.",
     text2:
@@ -17,7 +17,8 @@ export const en = {
 
   cta: {
     title: "Find a specialist for any task",
-    desc: "Electricians, plumbers, cleaning or appliance repair — leave a request and our operators will contact you.",
+    desc:
+      "Electricians, plumbers, cleaning or appliance repair — leave a request and our operators will contact you.",
     name: "Your name",
     phone: "Phone or Telegram",
     service: "Service type",
@@ -27,6 +28,14 @@ export const en = {
     agreeAnd: "and",
     agreeTerms: "Terms of Service",
     submit: "Submit request",
+  },
+
+  /* ===== CTA TRANSITION TO WEB APPLICATION ===== */
+  appCta: {
+    title: "Open the Osonly web application",
+    text:
+      "Create orders, choose specialists, and manage services directly in your personal dashboard.",
+    button: "Open web application",
   },
 
   success: {
@@ -41,7 +50,7 @@ export const en = {
     "Cleaner",
     "Appliance repair",
     "Furniture assembly",
-    "Loader",
+    "Mover",
     "Minor repairs",
     "Tutor",
   ],
@@ -51,7 +60,7 @@ export const en = {
   },
 
   categoriesList: [
-    "Electrical",
+    "Electrical work",
     "Plumbing",
     "Cleaning",
     "Appliance repair",
@@ -62,7 +71,7 @@ export const en = {
   advantagesList: [
     {
       title: "Verified specialists",
-      text: "Each specialist goes through a manual profile and category check.",
+      text: "Each specialist goes through manual profile and category verification.",
       icon: "✓",
     },
     {
@@ -85,12 +94,12 @@ export const en = {
       text: "Describe your task — it takes less than one minute.",
     },
     {
-      title: "We select a specialist",
+      title: "We match a specialist",
       text: "The system suggests suitable specialists.",
     },
     {
       title: "Discuss the details",
-      text: "Chat and agree on the conditions.",
+      text: "Connect via chat and agree on the terms.",
     },
     {
       title: "Task completed",
@@ -102,7 +111,7 @@ export const en = {
     title: "About us",
     p1: "Osonly helps users quickly find trusted specialists.",
     p2: "Our mission is simplicity, transparency, and quality.",
-    p3: "This project was created for educational purposes.",
+    p3: "The project was created for educational purposes.",
   },
 
   footer: {
@@ -114,45 +123,46 @@ export const en = {
     close: "Close",
 
     privacy: `
-This Privacy Policy is created for educational purposes and 
-defines the procedure for processing personal data within the 
-demonstration project “Osonly”.
+This Privacy Policy is created for educational purposes and
+defines the procedure for processing personal data of users within
+the demonstration project “Osonly”.
 
-1. Collected data  
-We process only the data voluntarily provided by the user:
+1. Types of collected data  
+We process only the data that the user provides voluntarily:
 — name or nickname;  
 — phone number or messenger contact;  
-— task or request description.
+— description of the task or request.  
 
 2. Purpose of processing  
-The data is used exclusively to simulate specialist selection 
-and demonstrate how the service works.
+The data is used исключительно to simulate the specialist matching process
+and demonstrate the principles of the service operation.
 
-3. Data sharing  
-Data is not shared with third parties and is used only within the educational project.
+3. Data sharing with third parties  
+The data is not shared with third parties and is used only within the educational project.
 
 4. Data storage and deletion  
-Information is stored for a limited period and can be deleted upon the user’s request.
+Information is stored for a limited period of time and can be deleted upon the user’s first request.
 
 5. Liability  
-The project is not a commercial service and does not guarantee actual service delivery or specialist assignment.
+The project is not a commercial service and does not guarantee the actual provision of services or specialist selection.
 `,
 
     terms: `
-These Terms of Service define the rules for using the 
+This Terms of Service defines the rules for using the
 demonstration project “Osonly”.
 
 1. Project status  
-Osonly is an educational project used solely to demonstrate the logic of online services.
+Osonly is an educational project and is used solely to demonstrate the logic of online services.
 
-2. User obligations  
-The user guarantees the accuracy of the provided information and agrees that it is used only for educational purposes.
+2. User responsibilities  
+The user guarantees the accuracy of the provided information and agrees that it is used for educational purposes only.
 
 3. Limitation of liability  
-The project authors are not responsible for any consequences arising from the use of the provided information.
+The project authors are not responsible for any consequences arising from the use of information
+provided within the service.
 
 4. Changes to the terms  
-The authors may update these terms at any time to improve the educational service model.
+The project authors may update the agreement texts at any time to improve the educational service model.
 `,
   },
 };

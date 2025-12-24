@@ -9,6 +9,7 @@ import Advantages from "./sections/Advantages";
 import Categories from "./sections/Categories";
 import HowItWorks from "./sections/HowItWorks";
 import About from "./sections/About";
+import AppCTA from "./sections/AppCTA";
 
 import { LangContext } from "./i18n/context";
 
@@ -31,6 +32,7 @@ export default function App() {
         <Advantages />
         <Categories />
         <HowItWorks />
+        <AppCTA />
         <About />
       </main>
 
